@@ -8,9 +8,12 @@ const Login = ({press, navigation}) =>{
     const {email, setEmail, password, setPassword, setLogged } = useContext(UserContext)
     async function doLogin()
     {
-        await login(email, password)
-        //setLogged(true)
-        alert("Logging...")
+        const user = await login(email, password)
+        if(user !== undefined)
+        {
+            setLogged(true)
+            console.log(user)
+        }
     }
 
     return(
