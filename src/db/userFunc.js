@@ -11,23 +11,24 @@ const headers = {
 
 export const register = async (name, email, password, birth, phone) =>
 {
-    const user = JSON.parse({
+    var user = {
         name,
         email,
         password,
         birth,
         phone
-    })
-    
-    await axios.post(`${URL}/register`,
+    }
+    return await axios.post(`${URL}/register`,
     {
         name: user.name,
         email: user.email,
         password: user.password,
         birth: user.birth,
         phone: user.phone
-    }, headers).then((r) =>{
-        console.log(r.status)
+    }, headers).then(async (r) =>{
+        user = r.data.response
+        await AsyncStorage.setItem("user_info", JSON.stringify(user))
+        return user
     }).catch((err) =>{
         console.log(err.message)
     })
@@ -46,8 +47,11 @@ export const login = async (email, password) =>
        
         if(r.status === 200)
         {
-            user = r.data.response
-            await AsyncStorage.setItem("user_login", JSON.stringify(user))
+            var token = r.data.response
+            user = r.data.user
+            console.log(token)
+            await AsyncStorage.setItem("user_token", JSON.stringify(token))
+            await AsyncStorage.setItem("user_info", JSON.stringify(user))
             return user
         }
         

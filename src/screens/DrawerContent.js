@@ -4,14 +4,14 @@ import {styles} from '../styles/DrawerContentStyles'
 import {UserContext} from '../context/UserContext'
 import Restaurants from './Restaurants'
 const DrawerContent = () => {
-    const {theme} = useContext(UserContext)
+    const {theme, name} = useContext(UserContext)
     return (
         <View style={{height: 700, backgroundColor: '#FFF', borderColor: theme, borderWidth: 1, borderTopRightRadius: 15, borderTopLeftRadius: 15,  alignItems: 'center'}}>
             <View style={styles.tabTop}/>
             <View style={styles.userInfoContainer}>
                 <View style={{width: 100, height: 100, borderRadius: 50, borderWidth: 1, marginBottom: 20}}/>
                 <View>
-                    <Text style={styles.userName}>Jhon Khalaham</Text>
+                    <Text style={styles.userName}>{name}</Text>
                     <Text style={styles.userPoints}>Points: 15,000</Text>
                 </View>
             </View>

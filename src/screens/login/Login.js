@@ -5,13 +5,13 @@ import {UserContext} from '../../context/UserContext'
 import {login} from '../../db/userFunc'
 const COLOR_DEFAULT_THEME = '#56CCF2'
 const Login = ({press, navigation}) =>{
-    const {email, setEmail, password, setPassword, setLogged } = useContext(UserContext)
+    const {email, setEmail, password, setPassword, setLogged, setUser } = useContext(UserContext)
     async function doLogin()
     {
         const user = await login(email, password)
         if(user !== undefined)
         {
-            setLogged(true)
+            setUser(user)
             console.log(user)
         }
     }

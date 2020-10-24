@@ -2,12 +2,18 @@ import React, {useContext} from 'react'
 import {UserContext} from '../../context/UserContext'
 import {View, Text, TouchableNativeFeedback, StyleSheet, Alert} from 'react-native'
 import { Avatar, Divider, Icon, Overlay} from 'react-native-elements';
+import AsyncStorage from '@react-native-community/async-storage'
 const OutAndDevBtns = () =>
 {
-    const {theme} = useContext(UserContext)
+    const {theme, setLogged} = useContext(UserContext)
+    async function logout()
+    {
+        await AsyncStorage.clear()
+        setLogged(false)
+    }
     return (
         <View>
-            <TouchableNativeFeedback  onPress={() => {alert('Saindo...')}}>
+            <TouchableNativeFeedback  onPress={() => {logout()}}>
                 <View style={styles.containDrawerOption}>
                 <Icon
                 name='logout'

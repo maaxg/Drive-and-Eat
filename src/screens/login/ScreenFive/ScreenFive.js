@@ -4,11 +4,15 @@ import {styles} from './styles'
 import {register} from '../../../db/userFunc'
 import {UserContext} from '../../../context/UserContext'
 const ScreenFive = ({navigation}) =>{
-    const {name, phone, birth,  email, password} = useContext(UserContext)
+    const {name, phone, birth,  email, password, setLogged} = useContext(UserContext)
     async function conReg()
     {
-        await register(name, email, password, birth, phone)
-        //navigation.navigate("Home")
+        const user = await register(name, email, password, birth, phone)
+        if(user !== undefined)
+        {
+            setLogged(true)
+            navigation.navigate("Home")
+        }
     }
     return (
      <ScrollView style={{flex: 1, backgroundColor: '#EF6E6E'}}>

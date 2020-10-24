@@ -5,14 +5,14 @@ import {UserContext} from '../context/UserContext'
 import HamburguerButton from '../components/HamburguerButton'
 const Profile = ({navigation}) =>
 {
-    const {theme} = useContext(UserContext)
+    const {theme, email, phone} = useContext(UserContext)
     return(
         <ScrollView style={{flex: 1, backgroundColor: '#FFF'}}>
             <View style={{height: 300, backgroundColor: theme, width: '100%'}}>
                 <UserInfo />
                 <HamburguerButton press={() => navigation.openDrawer()}/>
-                <Text style={{fontFamily: 'RobotoCondensed-Regular', color:"#FFF", fontSize: 24, margin: '5%'}}>Email: jhonkhalaham@gmail.com</Text>
-                <Text style={{fontFamily: 'RobotoCondensed-Regular', color:"#FFF", fontSize: 24, marginLeft: '5%'}}>Telefone: (81)98222222</Text>
+                <Text style={{fontFamily: 'RobotoCondensed-Regular', color:"#FFF", fontSize: 24, margin: '5%'}}>Email: {email}</Text>
+                <Text style={{fontFamily: 'RobotoCondensed-Regular', color:"#FFF", fontSize: 24, marginLeft: '5%'}}>Telefone: {phone}</Text>
             </View>
             <View style={{alignItems: 'center'}}>
                 <Text style={{fontFamily: 'RobotoCondensed-Regular', color:theme, fontSize: 24}}>Alguns Lugares que você já visitou:</Text>
