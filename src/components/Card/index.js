@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet, Dimensions} from 'react-native'
+import {View, Text, StyleSheet, Dimensions, Image} from 'react-native'
 import {Icon}from 'react-native-elements'
 
 
@@ -8,7 +8,19 @@ const Card = ({image, description, stars, distance}) =>
     return(
         <View style={styles.container}>
             <View style={styles.card}>
-                <Text>{image}</Text>
+                {
+                    image !== undefined
+                    ?
+                    <Image source={{uri: image}}
+                    style={{
+                        resizeMode: 'contain',
+                        width: 150,
+                        height: 150
+                    }}
+                    />
+                    :
+                    <Text>Relax</Text>
+                }
             </View>
                 <View style={styles.infos}>
                     <Text style={styles.text}>{description}</Text>

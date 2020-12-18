@@ -1,8 +1,8 @@
 import React, {useContext} from 'react'
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native'
-import UserInfo from '../components/UserInfo'
-import {UserContext} from '../context/UserContext'
-import HamburguerButton from '../components/HamburguerButton'
+import UserInfo from '../../components/UserInfo'
+import {UserContext} from '../../context/UserContext'
+import HamburguerButton from '../../components/HamburguerButton'
 const Profile = ({navigation}) =>
 {
     const {theme, email, phone} = useContext(UserContext)

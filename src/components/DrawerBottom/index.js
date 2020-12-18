@@ -1,9 +1,9 @@
 import React, {useRef} from 'react'
 import {View, Text} from 'react-native'
-import {styles} from '../styles/DrawerBottomStyles'
+import {styles} from './DrawerBottomStyles'
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
-import DrawerContent from '../screens/DrawerContent'
+import DrawerContent from '../../screens/DrawerContent'
 
 const DrawerBottom = () =>
 {
@@ -13,7 +13,7 @@ const DrawerBottom = () =>
         <View style={[styles.container]}>
            
         <BottomSheet
-                snapPoints={['90%', '30%']}
+                snapPoints={['100%', '30%']}
                 renderContent={() => (<DrawerContent />)}
                 renderHeader={renderHeader}
                 initialSnap={1}

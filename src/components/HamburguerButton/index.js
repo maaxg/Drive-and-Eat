@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
 import {Icon} from 'react-native-elements'
-import {UserContext} from '../context/UserContext'
+import {UserContext} from '../../context/UserContext'
 
 const HamburguerButton = ({navigation, press}) =>
 {

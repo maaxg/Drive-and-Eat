@@ -1,10 +1,10 @@
 import React, {useContext} from 'react'
 import {View, Text, TouchableNativeFeedback, ScrollView, SafeAreaView, Linking} from 'react-native'
-import DrawerContent from '../screens/DrawerContent'
+import DrawerContent from '../../screens/DrawerContent'
 import {DrawerItem} from '@react-navigation/drawer'
-import {styles} from '../styles/DrawerDefaultComponent'
+import {styles} from '../DrawerDefaultComponent/DrawerDefaultComponent'
 import { Icon } from 'react-native-elements';
-import {UserContext} from '../context/UserContext'
+import {UserContext} from '../../context/UserContext'
 
 const DrawerDefaultItems = (props) =>
 {

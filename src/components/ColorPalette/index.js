@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
-import  {UserContext} from '../context/UserContext'
+import  {UserContext} from '../../context/UserContext'
 import AsyncStorage from '@react-native-community/async-storage'
 
 const ColorPalette = () =>

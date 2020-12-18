@@ -1,11 +1,11 @@
 import React, {useEffect, useContext} from 'react'
 import {View, Text, TouchableNativeFeedback, ScrollView, SafeAreaView, Linking} from 'react-native'
-import DrawerDefaultItems from './DrawerDefaultItems'
-import ColorPalette from './ColorPalette'
-import UserInfo from './UserInfo'
-import OutAndDevBtns from './outAndDev/OutAndDevBtns'
+import DrawerDefaultItems from '../DrawerDefaultItems'
+import ColorPalette from '../ColorPalette'
+import UserInfo from '../UserInfo'
+import OutAndDevBtns from '../outAndDev/OutAndDevBtns'
 import {Divider} from 'react-native-elements';
-import {styles} from '../styles/DrawerDefaultComponent'
+import {styles} from './DrawerDefaultComponent'
 const DrawerDefaultComponent = (props) =>
 {
     return(

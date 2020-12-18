@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import {Avatar} from 'react-native-elements';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
-import {UserContext} from '../context/UserContext'
+import {UserContext} from '../../context/UserContext'
 const UserInfo = () =>{
     const {theme, name} = useContext(UserContext)
         return(

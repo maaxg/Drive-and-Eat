@@ -1,15 +1,15 @@
 import React, {useRef, useContext} from 'react'
-import {View, Text} from 'react-native'
-import {styles} from '../styles/DrawerContentStyles'
-import {UserContext} from '../context/UserContext'
-import Restaurants from './Restaurants'
-const DrawerContent = () => {
+import {View, Text, Image} from 'react-native'
+import {styles} from './DrawerContentStyles'
+import {UserContext} from '../../context/UserContext'
+import Restaurants from '../Restaurants'
+const DrawerContent = (restaurants) => {
     const {theme, name} = useContext(UserContext)
     return (
-        <View style={{height: 700, backgroundColor: '#FFF', borderColor: theme, borderWidth: 1, borderTopRightRadius: 15, borderTopLeftRadius: 15,  alignItems: 'center'}}>
+        <View style={[styles.container, {borderColor: theme,}]}>
             <View style={styles.tabTop}/>
             <View style={styles.userInfoContainer}>
-                <View style={{width: 100, height: 100, borderRadius: 50, borderWidth: 1, marginBottom: 20}}/>
+                <Image source={require("../../../assets/img/my_pic.jpeg")} style={styles.profilePic}/>
                 <View>
                     <Text style={styles.userName}>{name}</Text>
                     <Text style={styles.userPoints}>Points: 15,000</Text>
