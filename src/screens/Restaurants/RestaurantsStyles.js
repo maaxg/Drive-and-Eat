@@ -7,18 +7,4 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    second_container:
-    {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent:'space-around',
-        alignItems: 'stretch'
-    },
-    third_container:
-    {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent:'space-around',
-        alignItems: 'stretch'
-    }
 })

@@ -14,12 +14,12 @@ const Card = ({image, description, stars, distance}) =>
                     <Image source={{uri: image}}
                     style={{
                         resizeMode: 'contain',
-                        width: 150,
-                        height: 150
+                        width: 100,
+                        height: 100
                     }}
                     />
                     :
-                    <Text>Relax</Text>
+                    <Text>Restaurant Pic</Text>
                 }
             </View>
                 <View style={styles.infos}>
@@ -40,23 +40,25 @@ const Card = ({image, description, stars, distance}) =>
 }
 const styles = StyleSheet.create({
     container:{
-        alignItems: 'center'
+        width: '50%',
+        height: 250,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     card:
     {
         justifyContent: 'center',
         alignItems: 'center',
-        width: Dimensions.get('window').width / 3,
+        width: Dimensions.get('window').width / 2,
         height: Dimensions.get('window').height / 5,
-        margin: 10,
-        backgroundColor: '#E1E1E1'
     },
     infos:
     {
+        width: '100%',
+        justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        width: '80%'
     },
     text:{
         fontFamily: 'sans-serif-condensed',

@@ -2,11 +2,10 @@ import { StyleSheet, Dimensions } from 'react-native'
 
 export const styles = StyleSheet.create({
     container: {
-        height: '100%',
+        height: "100%",
         backgroundColor: '#FFF',
         borderWidth: 1,
-        borderTopRightRadius: 15,
-        borderTopLeftRadius: 15,
+
         alignItems: 'center'
     },
     userInfoContainer: {
