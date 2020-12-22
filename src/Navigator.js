@@ -11,6 +11,7 @@ import Intro from './animations/Intro'
 import Profile from './screens/Profile'
 import DrawerDefaultComponent from './components/DrawerDefaultComponent'
 import Login from './screens/login/Login'
+import NearRestaurants from './screens/NearRestaurants'
 //Login boys
 import ScreenOne from './screens/login/ScreenOne/ScreenOne'
 import ScreenTwo from './screens/login/ScreenTwo/ScreenTwo'
@@ -61,6 +62,7 @@ export default function drawerTabs() {
             <Drawer.Screen  name="Home" component={Home} />
             <Drawer.Screen  name="Intro" component={Intro} />
             <Drawer.Screen  name="Profile" component={Profile} />
+            <Drawer.Screen  name="Near Restaurants" component={NearRestaurants} />
             <Drawer.Screen name={"Login"} component={Login} options={{headerShown: false}}/>
             <Drawer.Screen name={"ScreenOne"} component={stackLogin} />
             </Drawer.Navigator>

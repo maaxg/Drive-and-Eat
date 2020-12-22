@@ -16,7 +16,7 @@ const DrawerDefaultComponent = (props) =>
                     <View style={styles.viewContainer}>
                         <DrawerDefaultItems iconName={'user'} drawerName={'Profile'} onPress={() => props.navigation.navigate('Profile')}/>
                         <DrawerDefaultItems iconName={'home'} drawerName={'Home'} onPress={() => props.navigation.navigate('Home')}/>
-                        <DrawerDefaultItems iconName={'star-o'} drawerName={'Near Restaurants'} onPress={() => props.navigation.navigate('Home')} />
+                        <DrawerDefaultItems iconName={'star-o'} drawerName={'Near Restaurants'} onPress={() => props.navigation.navigate('Near Restaurants')} />
                         <DrawerDefaultItems iconName={'search'} drawerName={'Places to go'} onPress={() => props.navigation.navigate('Home')} />
 
                         <View>

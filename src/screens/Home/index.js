@@ -16,14 +16,15 @@ const Home = ({ navigation }) => {
     const { logged, getNearRestaurants, loadingRestaurants, isFirstTimeHome } = useContext(UserContext)
     const [region, setRegion] = useState({})
     const [restaurants, setRestaurants] = useState([])
-    console.log(isFirstTimeHome)
+    const [firstTimeHome, setFirstTimeHome] = useState(true)
+    console.log(firstTimeHome)
     useEffect(() => {
-        if(isFirstTimeHome){
+        if(firstTimeHome){
             defineNearRests()
         }
-    }, [isFirstTimeHome])
+    }, [firstTimeHome])
     async function defineNearRests() {
-        setRestaurants(await getNearRestaurants())
+        setRestaurants(await getNearRestaurants(setFirstTimeHome))
 
     }
     function getCurrentPosition() {

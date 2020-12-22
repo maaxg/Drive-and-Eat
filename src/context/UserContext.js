@@ -13,7 +13,7 @@ export default function UserProvider({ children }) {
     const [birth, setBirth] = useState('17/04/2001')
     const [password, setPassword] = useState("12345678")
     const [cards, setCards] = useState()
-    const [isFirstTimeHome, setFirstTimeHome] = useState(true)
+    //const [isFirstTimeHome, setFirstTimeHome] = useState(false)
     useEffect(() => {
         getTheme()
         //login()
@@ -42,7 +42,7 @@ export default function UserProvider({ children }) {
         setTheme(themeAsync)
     }
 
-    async function getNearRestaurants() {
+    async function getNearRestaurants(setFirstTimeHome) {
         var latitude = -8.0306
         var longitude = -34.9160
         const restaurants = []
@@ -79,8 +79,8 @@ export default function UserProvider({ children }) {
             theme, setTheme,
             logged, setLogged,
             name, setName, email, setEmail, phone, setPhone, birth, setBirth,
-            password, setPassword, setUser, getNearRestaurants,  loadingRestaurants, isFirstTimeHome, cards
-
+            password, setPassword, setUser, getNearRestaurants,  loadingRestaurants,  cards
+            //isFirstTimeHome
         }}>
             {children}
         </UserContext.Provider>
