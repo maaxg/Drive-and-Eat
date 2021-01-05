@@ -13,7 +13,7 @@ const COLOR_DEFAULT_THEME = '#56CCF2'
 const Home = ({ navigation }) => {
     const [load, setLoad] = useState(false)
     const [error, setError] = useState()
-    const { logged, getNearRestaurants, loadingRestaurants, isFirstTimeHome } = useContext(UserContext)
+    const { logged, getNearRestaurants, loadingRestaurants, isFirstTimeHome, theme } = useContext(UserContext)
     const [region, setRegion] = useState({})
     const [restaurants, setRestaurants] = useState([])
     const [firstTimeHome, setFirstTimeHome] = useState(true)
@@ -95,6 +95,8 @@ const Home = ({ navigation }) => {
                                                 width: 40,
                                                 height: 40,
                                                 borderRadius: 20,
+                                                borderColor: theme,
+                                                borderWidth: 2,
                                             }}/>
                         </Marker>
 

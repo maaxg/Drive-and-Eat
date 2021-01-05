@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         color: '#14fcf5'
     },
     image: {
-        marginTop: '5%',
+        marginTop: '13%',
         resizeMode: 'contain',
         width: 100,
         height: 100,

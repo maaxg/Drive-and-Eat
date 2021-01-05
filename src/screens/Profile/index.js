@@ -11,7 +11,7 @@ const Profile = ({navigation}) =>
             <View style={{height: 300, backgroundColor: theme, width: '100%'}}>
                 <UserInfo />
                 <HamburguerButton press={() => navigation.openDrawer()}/>
-                <Text style={{fontFamily: 'RobotoCondensed-Regular', color:"#FFF", fontSize: 24, margin: '5%', marginBottom: 0}}>Email: {email}</Text>
+                <Text style={{fontFamily: 'RobotoCondensed-Regular', color:"#FFF", fontSize: 24, margin: '5%', marginBottom: 0, marginTop: 0}}>Email: {email}</Text>
                 <Text style={{fontFamily: 'RobotoCondensed-Regular', color:"#FFF", fontSize: 24, marginLeft: '5%'}}>Telefone: {phone}</Text>
             </View>
             <View style={{alignItems: 'center'}}>
