@@ -7,7 +7,12 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     title:{
-        fontSize: 18,
-        color: "#FFF"
-    }
+     fontWeight: '600', 
+     fontSize: 22, 
+     color: '#717171',  
+    },
+    hamburguerContainer:{
+        marginBottom: '20%', 
+        alignSelf: 'flex-start',
+    },
 })

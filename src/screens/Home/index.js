@@ -17,12 +17,11 @@ const Home = ({ navigation }) => {
     const [region, setRegion] = useState({})
     const [restaurants, setRestaurants] = useState([])
     const [firstTimeHome, setFirstTimeHome] = useState(true)
-    console.log(firstTimeHome)
     useEffect(() => {
         if(firstTimeHome){
             defineNearRests()
         }
-    }, [firstTimeHome])
+    }, [])
     async function defineNearRests() {
         setRestaurants(await getNearRestaurants(setFirstTimeHome))
 
@@ -106,7 +105,7 @@ const Home = ({ navigation }) => {
                                 return (
                                     <Marker
                                         pinColor={'blue'}
-                                        key={item.place_id}
+                                        key={item.id}
                                         coordinate={{ latitude: item.geometry.location.lat, longitude: item.geometry.location.lng }}
                                         title={item.name}
                                         description={item.vicinity}

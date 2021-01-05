@@ -48,17 +48,17 @@ export default function UserProvider({ children }) {
         const restaurants = []
 
         const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1000&type=restaurant&key=${API_KEY}`
+        const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400`
         return await axios.get(url).then(resp => {
             setLoadingRestaurants(true)
-            //console.log(resp.data)
-            resp.data.results.map(item => {
+            resp.data.results.map(async (item) => {
                 restaurants.push({
                     id: item.place_id,
                     geometry: item.geometry,
                     status: item.business_status,
                     icon: item.icon,
                     name: item.name,
-                    photos: item.photos,
+                    photo: await `${photoUrl}&photoreference=${item.photos[0].photo_reference}&key=${API_KEY}`,
                     rating: item.rating,
                     vicinity: item.vicinity
 

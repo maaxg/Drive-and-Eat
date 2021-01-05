@@ -12,7 +12,7 @@ const Restaurants = (fromNear) => {
         cards !== undefined
             ?
             <View style={styles.first_container}>
-                <Text style={{ fontWeight: '100', fontSize: 18, color: '#717171', alignSelf: 'flex-start' }}>Restaurants near you</Text>
+                
                 <FlatList
                     data={cards.slice(0, 4)}
                     extraData={cards.slice(0, 4)}
@@ -24,7 +24,7 @@ const Restaurants = (fromNear) => {
                         console.log(item.item.name)
                         return (
                             <Card
-                                image={item.item.icon}
+                                image={item.item.photo}
                                 description={item.item.name}
                                 stars={item.item.rating}
                                 distance={'0.5'} />

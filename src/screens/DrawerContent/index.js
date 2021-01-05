@@ -27,10 +27,10 @@ const DrawerContent = (restaurants) => {
             </View>
                 <View style={styles.restaurants}>
                     <Text style={{fontWeight: '200', fontSize: 25, }}>{
-                    hour >= 6 && hour <= 11 ? "ITS BREAKFAST TIME!":
-                    hour >=11 && hour <= 15 ? "ITS LUNCH TIME":
+                    hour >= 6 && hour <= 11 ? "IT'S BREAKFAST TIME!":
+                    hour >=11 && hour <= 15 ? "IT'S LUNCH TIME":
                     hour >= 15 && hour <= 18 ? "It's to a snack" :
-                    hour >= 18 && hour <= 23 ? "ITS DINNER TIME":
+                    hour >= 18 && hour <= 23 ? "IT'S DINNER TIME":
                     "You want to eat something?"}</Text>
                     <Restaurants />
                 </View>

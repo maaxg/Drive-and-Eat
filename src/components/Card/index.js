@@ -14,8 +14,9 @@ const Card = ({image, description, stars, distance}) =>
                     <Image source={{uri: image}}
                     style={{
                         resizeMode: 'contain',
-                        width: 100,
-                        height: 100
+                        width: 150,
+                        height: 150,
+                        borderRadius: 8,
                     }}
                     />
                     :
