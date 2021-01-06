@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext, useEffect } from 'react'
-import { View, Text, Image, ScrollView, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, Image, ScrollView, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Modal } from 'react-native'
 import { styles } from './HomeStyles'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import DrawerBottom from '../../components/DrawerBottom'
@@ -7,6 +7,7 @@ import { UserContext } from '../../context/UserContext'
 import HamburguerButton from '../../components/HamburguerButton'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation'
+import RestaurantModal from '../../components/RestaurantModal'
 
 import Login from '../login/Login'
 const COLOR_DEFAULT_THEME = '#56CCF2'
@@ -17,8 +18,11 @@ const Home = ({ navigation }) => {
     const [region, setRegion] = useState({})
     const [restaurants, setRestaurants] = useState([])
     const [firstTimeHome, setFirstTimeHome] = useState(true)
+    const [modalVisibility, setModalVisibility] = useState(false)
+    const [selectedRestaurant, setSelectedRestaurant] = useState(null)
+    console.log(selectedRestaurant)
     useEffect(() => {
-        if(firstTimeHome){
+        if (firstTimeHome) {
             defineNearRests()
         }
     }, [])
@@ -83,7 +87,7 @@ const Home = ({ navigation }) => {
                         longitudeDelta: 0.0121,
                     }}
                 >
-                    
+
                     <Marker
                         key={"1"}
                         coordinate={{ latitude: -8.0306, longitude: -34.9160 }}
@@ -91,14 +95,14 @@ const Home = ({ navigation }) => {
                         description={"Onde estou"}
                     >
                         <Image source={require("../../../assets/img/my_pic.jpeg")}
-                                            style={{
-                                                width: 40,
-                                                height: 40,
-                                                borderRadius: 20,
-                                                borderColor: theme,
-                                                borderWidth: 2,
-                                            }}/>
-                        </Marker>
+                            style={{
+                                width: 40,
+                                height: 40,
+                                borderRadius: 20,
+                                borderColor: theme,
+                                borderWidth: 2,
+                            }} />
+                    </Marker>
 
                     {
                         restaurants != "" || restaurants !== undefined
@@ -111,6 +115,11 @@ const Home = ({ navigation }) => {
                                         coordinate={{ latitude: item.geometry.location.lat, longitude: item.geometry.location.lng }}
                                         title={item.name}
                                         description={item.vicinity}
+
+                                        onPress={() => {
+                                            setModalVisibility(true)
+                                            setSelectedRestaurant(item)
+                                        }}
                                     >
                                         <Image source={require("../../../assets/img/restaurant_icon.png")}
                                             style={{
@@ -130,12 +139,22 @@ const Home = ({ navigation }) => {
 
                 <HamburguerButton press={() => { navigation.openDrawer(); }} />
                 {
-                        restaurants != "" || restaurants !== undefined
-                            ?
-                            <DrawerBottom />
-                            :
-                            null
+                    restaurants != "" || restaurants !== undefined
+                        ?
+                        <DrawerBottom />
+                        :
+                        null
                 }
+                {
+                    selectedRestaurant !== null
+                        ?
+                        <RestaurantModal modalVisibility={modalVisibility} setModalVisibility={setModalVisibility}
+                        selectedRestaurant={selectedRestaurant} theme={theme}/>
+                    :
+                    null
+                }
+
+
 
 
             </View>
