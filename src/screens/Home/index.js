@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect } from 'react'
+import React, { useState, useRef, useContext, useEffect, useMemo } from 'react'
 import { View, Text, Image, ScrollView, StyleSheet, TextInput, TouchableOpacity, PermissionsAndroid, ActivityIndicator } from 'react-native'
 import { styles } from './HomeStyles'
 import DrawerBottom from '../../components/DrawerBottom'
@@ -9,9 +9,7 @@ import Geolocation from '@react-native-community/geolocation'
 import RestaurantModal from '../../components/RestaurantModal'
 import MapViewDirections from 'react-native-maps-directions'
 import Login from '../login/Login'
-
 import { MAP_API_KEY } from '@env'
-console.log(MAP_API_KEY)
 const COLOR_DEFAULT_THEME = '#56CCF2'
 const Home = ({ navigation }) => {
     const [load, setLoad] = useState(false)
@@ -19,27 +17,43 @@ const Home = ({ navigation }) => {
     const { logged, getNearRestaurants, loadingRestaurants, isFirstTimeHome, theme } = useContext(UserContext)
     const [region, setRegion] = useState([])
     const [restaurants, setRestaurants] = useState([])
-    const [firstTimeHome, setFirstTimeHome] = useState(false)
+    const [firstTimeHome, setFirstTimeHome] = useState(true)
     const [modalVisibility, setModalVisibility] = useState(false)
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
     const [goToRestaurant, setGoToRestaurant] = useState(false)
     const [restaurantToTravel, setRestaurantToTravel] = useState(null)
     const [hasLocationPermission, sethasLocationPermission] = useState(false)
+    var prevRegion = usePrevious(region)
+
+    function usePrevious(value) {
+        const ref = useRef();
+        useEffect(() => {
+          ref.current = value;
+        });
+        return ref.current;
+      }
 
     console.log(selectedRestaurant)
-    useEffect(() => {
+    useEffect((prevProps, prevState) => {
         if (!hasLocationPermission) {
             verifyLocationPermission()
         }
-        if (hasLocationPermission) {
-            setInterval(() =>{
-                getCurrentPosition()
-              },30000)
+        // if (hasLocationPermission) {
+        //     console.log("has permission!")
+        //     getCurrentPosition()
+        // }
+        if(prevRegion !== region){
+            console.log("hey listen!")
+            console.log(prevRegion)
+            console.log(region)
+            getCurrentPosition()
+           
+            if (firstTimeHome === true && region.latitude !== undefined) {
+                defineNearRests(region.latitude, region.longitude)
+            }
         }
-    }, [hasLocationPermission, region])
+    }, [firstTimeHome])
     async function defineNearRests(latitude, longitude) {
-        console.log("defining!")
-        console.log(restaurants)
         setRestaurants(await getNearRestaurants(setFirstTimeHome, latitude, longitude))
 
     }
@@ -65,19 +79,15 @@ const Home = ({ navigation }) => {
             setLoad(true)
             await Geolocation.getCurrentPosition(
                 async (position) => {
-                    console.log("wokeeey");
-                    console.log(position);
+                    // console.log("wokeeey");
+                    // console.log(position);
                     setRegion({
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
                         error: null,
                     });
-                    console.log("defining22sd!")
-                    
-                    console.log(firstTimeHome)
-                    if (firstTimeHome) {
-                        defineNearRests(position.coords.latitude, position.coords.longitude)
-                    }
+              
+            
                 },
                 (error) => {
                     setLoad(false);
@@ -114,7 +124,10 @@ const Home = ({ navigation }) => {
                 <MapView
                     provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                     style={StyleSheet.absoluteFillObject}
-                    onMapReady={() => getCurrentPosition()}
+                    onMapReady={() => {
+                        getCurrentPosition()
+                      
+                    }}
                     followsUserLocation={true}
                     region={{
                         latitude: region.latitude || -8.0306,
@@ -144,7 +157,6 @@ const Home = ({ navigation }) => {
                         restaurants != "" || restaurants !== undefined
                             ?
                             restaurants.map(item => {
-                                console.log("ITEM ITEM ITEM MARKER")
                                 return (
                                     <Marker
                                         pinColor={'blue'}
