@@ -1,39 +1,69 @@
 import React, { useState, useRef, useContext, useEffect } from 'react'
-import { View, Text, Image, ScrollView, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Modal } from 'react-native'
+import { View, Text, Image, ScrollView, StyleSheet, TextInput, TouchableOpacity, PermissionsAndroid, ActivityIndicator } from 'react-native'
 import { styles } from './HomeStyles'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import DrawerBottom from '../../components/DrawerBottom'
 import { UserContext } from '../../context/UserContext'
 import HamburguerButton from '../../components/HamburguerButton'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation'
 import RestaurantModal from '../../components/RestaurantModal'
-
+import MapViewDirections from 'react-native-maps-directions'
 import Login from '../login/Login'
+
+import { MAP_API_KEY } from '@env'
+console.log(MAP_API_KEY)
 const COLOR_DEFAULT_THEME = '#56CCF2'
 const Home = ({ navigation }) => {
     const [load, setLoad] = useState(false)
     const [error, setError] = useState()
     const { logged, getNearRestaurants, loadingRestaurants, isFirstTimeHome, theme } = useContext(UserContext)
-    const [region, setRegion] = useState({})
+    const [region, setRegion] = useState([])
     const [restaurants, setRestaurants] = useState([])
-    const [firstTimeHome, setFirstTimeHome] = useState(true)
+    const [firstTimeHome, setFirstTimeHome] = useState(false)
     const [modalVisibility, setModalVisibility] = useState(false)
     const [selectedRestaurant, setSelectedRestaurant] = useState(null)
+    const [goToRestaurant, setGoToRestaurant] = useState(false)
+    const [restaurantToTravel, setRestaurantToTravel] = useState(null)
+    const [hasLocationPermission, sethasLocationPermission] = useState(false)
+
     console.log(selectedRestaurant)
     useEffect(() => {
-        if (firstTimeHome) {
-            defineNearRests()
+        if (!hasLocationPermission) {
+            verifyLocationPermission()
         }
-    }, [])
-    async function defineNearRests() {
-        setRestaurants(await getNearRestaurants(setFirstTimeHome))
+        if (hasLocationPermission) {
+            setInterval(() =>{
+                getCurrentPosition()
+              },30000)
+        }
+    }, [hasLocationPermission, region])
+    async function defineNearRests(latitude, longitude) {
+        console.log("defining!")
+        console.log(restaurants)
+        setRestaurants(await getNearRestaurants(setFirstTimeHome, latitude, longitude))
 
     }
-    function getCurrentPosition() {
+    async function verifyLocationPermission() {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+            )
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log('permissão concedida')
+                sethasLocationPermission(true)
+            } else {
+                console.error('permissão negada')
+                sethasLocationPermission(false)
+
+            }
+        } catch (err) {
+            console.warn(err)
+        }
+    }
+    async function getCurrentPosition() {
         try {
             setLoad(true)
-            Geolocation.getCurrentPosition(
+            await Geolocation.getCurrentPosition(
                 async (position) => {
                     console.log("wokeeey");
                     console.log(position);
@@ -42,6 +72,12 @@ const Home = ({ navigation }) => {
                         longitude: position.coords.longitude,
                         error: null,
                     });
+                    console.log("defining22sd!")
+                    
+                    console.log(firstTimeHome)
+                    if (firstTimeHome) {
+                        defineNearRests(position.coords.latitude, position.coords.longitude)
+                    }
                 },
                 (error) => {
                     setLoad(false);
@@ -81,8 +117,8 @@ const Home = ({ navigation }) => {
                     onMapReady={() => getCurrentPosition()}
                     followsUserLocation={true}
                     region={{
-                        latitude: -8.0306,
-                        longitude: -34.9160,
+                        latitude: region.latitude || -8.0306,
+                        longitude: region.longitude || -34.9160,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                     }}
@@ -90,7 +126,7 @@ const Home = ({ navigation }) => {
 
                     <Marker
                         key={"1"}
-                        coordinate={{ latitude: -8.0306, longitude: -34.9160 }}
+                        coordinate={{ latitude: region.latitude || -8.0306, longitude: region.longitude || -34.9160 }}
                         title={"Here i'm"}
                         description={"Onde estou"}
                     >
@@ -108,11 +144,15 @@ const Home = ({ navigation }) => {
                         restaurants != "" || restaurants !== undefined
                             ?
                             restaurants.map(item => {
+                                console.log("ITEM ITEM ITEM MARKER")
                                 return (
                                     <Marker
                                         pinColor={'blue'}
                                         key={item.id}
-                                        coordinate={{ latitude: item.geometry.location.lat, longitude: item.geometry.location.lng }}
+                                        coordinate={{
+                                            latitude: item.geometry.location.lat,
+                                            longitude: item.geometry.location.lng
+                                        }}
                                         title={item.name}
                                         description={item.vicinity}
 
@@ -134,6 +174,30 @@ const Home = ({ navigation }) => {
                             :
                             null
                     }
+                    {
+                        goToRestaurant && restaurantToTravel !== null
+                            ?
+                            <MapViewDirections
+                                mode={"DRIVING"}
+                                resetOnChange={true}
+                                onError={() => {
+                                    getLatLong()
+                                    forceUpdate()
+                                }
+                                }
+                                origin={{
+                                    latitude: region.latitude || -8.0306,
+                                    longitude: region.longitude || -34.9160,
+                                }}
+                                destination={{ latitude: selectedRestaurant.geometry.location.lat, longitude: selectedRestaurant.geometry.location.lng }}
+                                apikey={MAP_API_KEY}
+                                strokeColor={theme}
+                                strokeWidth={5}
+                            />
+
+                            :
+                            null
+                    }
 
                 </MapView>
 
@@ -149,9 +213,11 @@ const Home = ({ navigation }) => {
                     selectedRestaurant !== null
                         ?
                         <RestaurantModal modalVisibility={modalVisibility} setModalVisibility={setModalVisibility}
-                        selectedRestaurant={selectedRestaurant} theme={theme}/>
-                    :
-                    null
+                            selectedRestaurant={selectedRestaurant} theme={theme}
+                            setGoToRestaurant={setGoToRestaurant}
+                            setRestaurantToTravel={setRestaurantToTravel} />
+                        :
+                        null
                 }
 
 

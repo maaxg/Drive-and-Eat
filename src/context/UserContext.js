@@ -1,8 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
+
+import { MAP_API_KEY } from '@env'
 export const UserContext = createContext();
-const API_KEY = "AIzaSyBkJNUaofi73GjC4kUurRxTINF0FsPnyeA"
+console.log(MAP_API_KEY)
 export default function UserProvider({ children }) {
     const [theme, setTheme] = useState('#000000')
     const [loadingRestaurants, setLoadingRestaurants] = useState(false)
@@ -42,25 +44,25 @@ export default function UserProvider({ children }) {
         setTheme(themeAsync)
     }
 
-    async function getNearRestaurants(setFirstTimeHome) {
-        var latitude = -8.0306
-        var longitude = -34.9160
+    async function getNearRestaurants(setFirstTimeHome, latitude, longitude) {
+        // var latitude = -8.0306
+        // var longitude = -34.9160
+        console.log("latitude: " + latitude)
+        console.log("longitude: " + longitude)
         const restaurants = []
         
-        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1000&type=restaurant&key=${API_KEY}`
+        const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=2000&type=restaurant&key=${MAP_API_KEY}`
         const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400`
         return await axios.get(url).then(resp => {
             setLoadingRestaurants(true)
             resp.data.results.map(async (item) => {
-                console.log(item.business_status)
                 restaurants.push({
-                    
                     id: item.place_id,
                     geometry: item.geometry,
                     status: item.business_status,
                     icon: item.icon,
                     name: item.name,
-                    photo: await `${photoUrl}&photoreference=${item.photos[0].photo_reference}&key=${API_KEY}`,
+                    photo: await `${photoUrl}&photoreference=${item.photos[0].photo_reference}&key=${MAP_API_KEY}`,
                     rating: item.rating,
                     vicinity: item.vicinity
 

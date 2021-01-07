@@ -6,8 +6,9 @@ import { Text } from 'react-native-elements'
 import { styles } from './styles'
 import { ActivityIndicator } from 'react-native'
 
-const RestaurantModal = ({ modalVisibility, setModalVisibility, selectedRestaurant, theme }) => {
-
+const RestaurantModal = ({ modalVisibility, setModalVisibility, selectedRestaurant, theme, 
+    setGoToRestaurant, setRestaurantToTravel}) => {
+        console.log(selectedRestaurant)
     return (
         <Modal style={styles.modal} visible={modalVisibility} transparent={true} animationType={"slide"}>
             <ScrollView style={{ flex: 1 }}>
@@ -21,7 +22,7 @@ const RestaurantModal = ({ modalVisibility, setModalVisibility, selectedRestaura
                             onLoad={() => {
                                 return (
                                     <View style={styles.load}>
-                                        <ActivityIndicator size={'large'} animating={true} color={theme}/>
+                                        <ActivityIndicator size={'large'} animating={true} color={theme} />
                                     </View>
                                 )
                             }}
@@ -31,7 +32,13 @@ const RestaurantModal = ({ modalVisibility, setModalVisibility, selectedRestaura
                             <Icon name={"map-marker-alt"} size={30} color={theme} />
                         </View>
                         <Text style={styles.text}>{selectedRestaurant.vicinity}</Text>
-                        <TouchableOpacity style={[styles.goToButton, { backgroundColor: theme }]}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setGoToRestaurant(true)
+                                setRestaurantToTravel(selectedRestaurant)
+                                setModalVisibility(false)
+                            }}
+                            style={[styles.goToButton, { backgroundColor: theme }]}>
                             <View style={styles.goToButtonView}>
                                 <Text style={styles.goToButtonText}>GO TO RESTAURANT</Text>
                                 <Icon name={"car"} size={30} color={"#FFF"} />
