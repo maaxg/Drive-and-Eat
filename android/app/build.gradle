@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.tourstop"
+        applicationId "com.driveandeat"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

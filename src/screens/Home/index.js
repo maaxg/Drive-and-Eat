@@ -28,31 +28,20 @@ const Home = ({ navigation }) => {
     function usePrevious(value) {
         const ref = useRef();
         useEffect(() => {
-          ref.current = value;
+            ref.current = value;
         });
         return ref.current;
-      }
+    }
 
     console.log(selectedRestaurant)
     useEffect((prevProps, prevState) => {
-        if (!hasLocationPermission) {
-            verifyLocationPermission()
-        }
-        // if (hasLocationPermission) {
-        //     console.log("has permission!")
-        //     getCurrentPosition()
-        // }
-        if(prevRegion !== region){
-            console.log("hey listen!")
-            console.log(prevRegion)
-            console.log(region)
+        verifyLocationPermission()
+        if (hasLocationPermission) {
+            console.log("has permission!")
             getCurrentPosition()
-           
-            if (firstTimeHome === true && region.latitude !== undefined) {
-                defineNearRests(region.latitude, region.longitude)
-            }
         }
-    }, [firstTimeHome])
+       
+    }, [])
     async function defineNearRests(latitude, longitude) {
         setRestaurants(await getNearRestaurants(setFirstTimeHome, latitude, longitude))
 
@@ -86,8 +75,11 @@ const Home = ({ navigation }) => {
                         longitude: position.coords.longitude,
                         error: null,
                     });
-              
-            
+                    if(firstTimeHome){
+                        defineNearRests(position.coords.latitude, position.coords.longitude)
+                    }
+
+
                 },
                 (error) => {
                     setLoad(false);
@@ -126,8 +118,9 @@ const Home = ({ navigation }) => {
                     style={StyleSheet.absoluteFillObject}
                     onMapReady={() => {
                         getCurrentPosition()
-                      
+
                     }}
+
                     followsUserLocation={true}
                     region={{
                         latitude: region.latitude || -8.0306,

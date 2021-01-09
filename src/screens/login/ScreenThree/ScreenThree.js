@@ -12,7 +12,7 @@ const ScreenThree = ({navigation}) =>{
                     <Text style={styles.text}>Você é IIINCRÍVEL!</Text>
                 </View>
                 <Text style={[styles.text]}>Agora preciso do seu</Text>
-                <Text style={[styles.text, {textDecorationLine: 'underline', marginBottom: '5%'}]}>Email e número de Telefone</Text>
+                <Text style={[styles.text, {textDecorationLine: 'underline', marginBottom: '5%'}]}>Email, Telefone{'\n'}e Data de nascimento</Text>
                 <TextInput  value={email} onChangeText={email => setEmail(email)} 
                 placeholder={"Digite seu email"} style={styles.input}/>
                 <TextInput  value={phone} onChangeText={phone => setPhone(phone)}  
