@@ -15,3 +15,7 @@ The APP use the google tecnology to get User actual location and consumes the go
 
 The Drive and Eat app let user choose his favorite theme color giving like that the best expirience to the user.
 
+# References
+
+React navigation: https://medium.com/backticks-tildes/customizing-react-navigation-drawer-cf60c01a296a
+Places API: https://developers.google.com/places/web-service/overview?hl=pt&utm_source=google&utm_medium=cpc&utm_campaign=FY18-Q2-global-demandgen-paidsearchonnetworkhouseads-cs-maps_contactsal_saf&utm_content=text-ad-none-none-DEV_c-CRE_436364851099-ADGP_Hybrid%20%7C%20AW%20SEM%20%7C%20SKWS%20~%20Places%20%7C%20EXA%20%7C%20Places%20API-KWID_43700044401406003-aud-595609270041%3Akwd-332054283724-userloc_1001625&utm_term=KW_places%20api-ST_places%20api&gclid=CjwKCAiAxeX_BRASEiwAc1QdkU8s6tCSSyvVqL4rFx_gjcrXOQTG669lTU0ewABYoDoKqC3cCgacshoCzewQAvD_BwE
